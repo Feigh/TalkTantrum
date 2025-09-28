@@ -4,12 +4,12 @@ namespace TalkGame;
 
 public class PlayerChoise
 {
-    public List<string> ProcessKey(ConsoleKeyInfo key, List<PlayerAction> toSelect, List<string> activwords)
+    public List<int> ProcessKey(ConsoleKeyInfo key, List<PlayerAction> toSelect, List<int> activwords)
     {
         if (int.TryParse(key.KeyChar.ToString(), out int rslt))
         {
-            var result = toSelect.Where(x => x.Id == rslt);
-            activwords.Add("");         
+            var result = toSelect.Where(x => x.Id == rslt).FirstOrDefault();
+            activwords.Add(result.Id);         
         }
 
         return activwords;
@@ -20,15 +20,13 @@ public class PlayerChoise
         return null;
     }
 
-    public List<PlayerAction> PrintChoises(List<string> selectWord)
+    public List<PlayerAction> FormatChoises(List<PlayerAction> selectWord)
     {
-        var result = selectWord.Select((w, index) =>
+        var result = selectWord.Select((w) =>
         {
-            index++;
-            return new PlayerAction() { Id = index, Text = string.Format("{0}. {1}", index.ToString(), w) };
+            return new PlayerAction() { Id = w.Id, Text = string.Format("{0}. {1}", w.Id.ToString(), w.Text) };
         });
 
         return result.ToList();
-        //result.ToList().ForEach(Console.WriteLine);
     }
 }

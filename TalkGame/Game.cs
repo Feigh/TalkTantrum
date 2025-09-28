@@ -9,15 +9,16 @@ public class Game
         var selectWord = new List<PlayerAction>() 
         { 
             new PlayerAction() { Id=1, Text="Du"},
-            new PlayerAction() { Id=1, Text="Jag"} 
+            new PlayerAction() { Id=2, Text="Jag"} 
         };
         var loop = true;
         var game = new PlayerChoise();
-        var activeChosies = new List<string>();
+        var activeChosies = new List<int>();
         while (loop)
         {
             Console.WriteLine("Gör ett val:");
-            game.PrintChoises(selectWord.Select(x => x.Text).ToList());
+            var printedlist = game.FormatChoises(selectWord);
+            printedlist.ToList().ForEach(x => Console.WriteLine(x.Text));
             var key = Console.ReadKey();
             Console.WriteLine();
 
@@ -28,6 +29,6 @@ public class Game
             
             activeChosies = game.ProcessKey(key, selectWord, activeChosies);
         }
-
+        activeChosies.ToList().ForEach(x => Console.WriteLine(x));
     }
 }
