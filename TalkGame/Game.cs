@@ -7,24 +7,25 @@ public class Game
     public void Run()
     {
         var selectWord = new List<PlayerAction>() 
-        { 
-            new PlayerAction() { Id=1, Levels = new List<int>{1},Text="Du"},
-            new PlayerAction() { Id=2, Levels = new List<int>{1},Text="Jag"}, 
-            new PlayerAction() { Id=3, Levels = new List<int>{1,2},Text="Get"},
-            new PlayerAction() { Id=4, Levels = new List<int>{2},Text="Hus"}, 
-            new PlayerAction() { Id=5, Levels = new List<int>{2},Text="Vete"},
-            new PlayerAction() { Id=6, Levels = new List<int>{2},Text="Ägare"}, 
-            new PlayerAction() { Id=7, Levels = new List<int>{2},Text="Fru"}
+        {
+            new PlayerAction(id: 1, levels: new List<int> { 1 }, text: "Du"),
+            new PlayerAction(id: 2, levels: new List<int> { 1 }, text: "Jag"),
+            new PlayerAction(id: 3, levels: new List<int> { 1 }, text: "Har"),
+            new PlayerAction(id: 4, levels: new List<int> { 1, 2 }, text: "Get"),
+            new PlayerAction(id: 5, levels: new List<int> { 2 }, text: "Hus"),
+            new PlayerAction(id: 6, levels: new List<int> { 2 }, text: "Vete"),
+            new PlayerAction(id: 7, levels: new List<int> { 2 }, text: "Ägare"),
+            new PlayerAction(id: 8, levels: new List<int> { 2 }, text: "Fru")
         };
         var loop = true;
         var game = new PlayerChoise();
-        var activeChosies = new List<int>();
+        var activeChosies = new List<PlayerAction>();
         var currentLevel = 1;
         while (loop)
         {
             Console.WriteLine("Gör ett val:");
             var printedlist = game.FormatChoises(selectWord,currentLevel);
-            printedlist.ToList().ForEach(x => Console.WriteLine(x.Text));
+            printedlist.ToList().ForEach(Console.WriteLine);
             var key = Console.ReadKey();
             Console.WriteLine();
 
@@ -33,7 +34,14 @@ public class Game
                 loop = false;
             }
             
-            activeChosies = game.ProcessKey(key, selectWord, activeChosies, ref currentLevel);
+            activeChosies = game.ProcessKey(key, selectWord, activeChosies);
+            
+            if (key.Key == ConsoleKey.E)
+            {
+                currentLevel = GameProgress.CheckLevel(activeChosies);
+                Console.WriteLine(GameProgress.ChoisesCommited(activeChosies));
+                activeChosies = new List<PlayerAction>();
+            }
         }
         activeChosies.ToList().ForEach(x => Console.WriteLine(x));
     }
