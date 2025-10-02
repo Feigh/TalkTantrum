@@ -33,7 +33,7 @@ public class Game
                 loop = false;
             }
             
-            activeChosies = game.ProcessKey(key, selectWord, activeChosies, currentLevel);
+            activeChosies = game.ProcessKey(key, selectWord, activeChosies, ref currentLevel);
         }
         activeChosies.ToList().ForEach(x => Console.WriteLine(x));
     }

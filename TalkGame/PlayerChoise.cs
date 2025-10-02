@@ -4,7 +4,7 @@ namespace TalkGame;
 
 public class PlayerChoise
 {
-    public List<int> ProcessKey(ConsoleKeyInfo key, List<PlayerAction> toSelect, List<int> activwords, int currLevel)
+    public List<int> ProcessKey(ConsoleKeyInfo key, List<PlayerAction> toSelect, List<int> activwords, ref int currLevel)
     {
         if (int.TryParse(key.KeyChar.ToString(), out int rslt))
         {
